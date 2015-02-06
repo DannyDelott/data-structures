@@ -38,7 +38,8 @@ Graph.prototype.removeNode = function(node){
 Graph.prototype.hasEdge = function(fromNode, toNode){
   var edgeFound = false;
   _.each(this.edges, function(to, from){
-    if(from === fromNode && to === toNode){
+    if((from === fromNode && to === toNode) ||
+      (to === fromNode && from === toNode)) {
       edgeFound = true;
     }
   });
@@ -59,6 +60,12 @@ Graph.prototype.removeEdge = function(fromNode, toNode){
 };
 
 Graph.prototype.forEachNode = function(cb){
+  //similar to each()
+  //nodes are in an array. want to iterate through it
+  //use _.each(collection, iterator)
+  //  collection is our nodes[]
+  //  iterator is our cb function
+  _.each(this.nodes, cb);
 };
 
 /*
