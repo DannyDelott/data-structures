@@ -37,4 +37,24 @@ describe('binarySearchTree', function() {
     console.log(array);
     expect(array).to.eql([5,2,3]);
   });
+
+  // ------ extra credit tests ------ //
+  //
+  // breadth first search tests
+  it('should have a method named breadthFirstLog', function(){
+    expect(binarySearchTree.breadthFirstLog).to.be.a("function");
+  });
+
+  it('breadthFirstLog should return the log as an array', function(){
+    expect(binarySearchTree.breadthFirstLog()).to.be.a("array");
+  });
+
+  it('breadthFirstLog should execute level by level', function(){
+    binarySearchTree.insert(2);
+    binarySearchTree.insert(7);
+    expect(JSON.stringify(binarySearchTree.breadthFirstLog())).to.equal(JSON.stringify([5,2,7]));
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(6);
+    expect(JSON.stringify(binarySearchTree.breadthFirstLog())).to.equal(JSON.stringify([5,2,7,3,6]));
+  });
 });

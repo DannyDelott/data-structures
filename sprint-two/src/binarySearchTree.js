@@ -60,7 +60,33 @@ BinarySearchTree.prototype.depthFirstLog = function(cb){
 };
 
 //worth hi-chews
-//breadthFirstLog
+// breadth first search method:
+// this is similar to depth first search except:
+//   it goes through each horizontal level of the tree
+//   before moving on
+BinarySearchTree.prototype.breadthFirstLog = function (bst) {
+  //your code here
+  bst = bst || this; //don't need an initial argument when calling bFL
+  var log = [];
+
+  var pushLeftAndRight = function(b){
+    if(b.left){
+      log.push(b.left.value);
+    }
+    if(b.right){
+      log.push(b.right.value);
+    }
+  };
+  /*while(bst){
+    log.push(bst.value);
+    pushLeftAndRight(bst);
+
+  }*/
+
+  //go to the next level
+
+  return log;
+}
 
 
 //worth lots of hi-chews
