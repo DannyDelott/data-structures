@@ -103,28 +103,50 @@ BinarySearchTree.prototype.shouldRebalanceTree = function(){
   return this.value;
 };
 
-BinarySearchTree.prototype.rebalanceTree = function(){
+BinarySearchTree.prototype.rebalanceTree = function(bst){
   // invoke after shouldRebalanceTree
-
-  var log = this.breadthFirstLog();
+  var tree = bst || this;
+  var log = tree.breadthFirstLog();
+  // if we're down to the last node, return this node
+  if (log.length === 1) {
+    return tree;
+  }
   log.sort();
 
+
   // get the middle of the sorted log to build the tree with
-  var middle = Math.round(bfl.length / 2);
+  var middle = Math.round(log.length / 2);
+
+  // left of middle becomes array of isolated BinarySearchTree nodes
+  var left = log.slice(0, middle - 1);
+  var leftBST = new BinarySearchTree(left[0]);
+  _.each(left, function(v, k){
+    if(k > 0){
+      leftBST.insert(v);
+    }
+    // left[k] = new BinarySearchTree(v);
+  });
+
+  // right of middle becomes array of isolated BinarySearchTree nodes
+  var right = log.slice(middle, log.length);
+  var rightBST = new BinarySearchTree(right[0]);
+  _.each(right, function(v, k) {
+    if(k > 0){
+      rightBST.insert(v);
+    }
+    //right[k] = new BinarySearchTree(v);
+  });
+
+
   // build new binary search tree
   var rebalancedBST = new BinarySearchTree(middle); //takes the middle value
+  // left child of rebalancedBST is the middle of the left log
+  rebalancedBST.left = tree.rebalanceTree(leftBST); //issue: line of code is passing an array of BST nodes, not just a BST node
+  // right child is middle of right log
+  rebalancedBST.right = tree.rebalanceTree(rightBST);
 
-  // left of middle
-  var left = log.splice(0, middle);
-
-  // right of middle
-  var right = [];
-
- // return this.value;
+  return rebalancedBST;
 };
-
-//worth lots of hi-chews
-//rebalanceTree
 
 /*
  * Complexity: What is the time complexity of the above functions?
