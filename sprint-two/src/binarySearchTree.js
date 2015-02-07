@@ -64,30 +64,31 @@ BinarySearchTree.prototype.depthFirstLog = function(cb){
 // this is similar to depth first search except:
 //   it goes through each horizontal level of the tree
 //   before moving on
-BinarySearchTree.prototype.breadthFirstLog = function (bst) {
-  //your code here
-  bst = bst || this; //don't need an initial argument when calling bFL
+BinarySearchTree.prototype.breadthFirstLog = function () {
+
+  var bst = this; //don't need an initial argument when calling bFL
   var log = [];
+  var queue = new Queue();
+  queue.enqueue(bst);
+  while(queue.size() > 0){
+    var dequeued = queue.dequeue();
+    log.push(dequeued.value);
 
-  var pushLeftAndRight = function(b){
-    if(b.left){
-      log.push(b.left.value);
+    if(dequeued.left !== null){
+      queue.enqueue(dequeued.left);
     }
-    if(b.right){
-      log.push(b.right.value);
+
+    if(dequeued.right !== null){
+      queue.enqueue(dequeued.right);
     }
-  };
-  /*while(bst){
-    log.push(bst.value);
-    pushLeftAndRight(bst);
-
-  }*/
-
-  //go to the next level
+  }
 
   return log;
 }
 
+BinarySearchTree.prototype.getValue = function(){
+  return this.value;
+};
 
 //worth lots of hi-chews
 //rebalanceTree
