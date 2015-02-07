@@ -86,8 +86,41 @@ BinarySearchTree.prototype.breadthFirstLog = function () {
   return log;
 }
 
-BinarySearchTree.prototype.getValue = function(){
+BinarySearchTree.prototype.getMinimumDepth = function(){
   return this.value;
+};
+
+BinarySearchTree.prototype.getMaximumDepth = function(){
+
+  var max = 0;
+  this.depthFirstLog(function(val){
+    max++;
+  });
+  return max;
+};
+
+BinarySearchTree.prototype.shouldRebalanceTree = function(){
+  return this.value;
+};
+
+BinarySearchTree.prototype.rebalanceTree = function(){
+  // invoke after shouldRebalanceTree
+
+  var log = this.breadthFirstLog();
+  log.sort();
+
+  // get the middle of the sorted log to build the tree with
+  var middle = Math.round(bfl.length / 2);
+  // build new binary search tree
+  var rebalancedBST = new BinarySearchTree(middle); //takes the middle value
+
+  // left of middle
+  var left = log.splice(0, middle);
+
+  // right of middle
+  var right = [];
+
+ // return this.value;
 };
 
 //worth lots of hi-chews

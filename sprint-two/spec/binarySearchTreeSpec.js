@@ -57,4 +57,65 @@ describe('binarySearchTree', function() {
     binarySearchTree.insert(6);
     expect(JSON.stringify(binarySearchTree.breadthFirstLog())).to.equal(JSON.stringify([5,2,7,3,6]));
   });
+
+  // rebalance tree tests
+  it('should have methods named getMinimumDepth, getMaximumDepth, shouldRebalanceTree, and rebalanceTree', function () {
+    expect(binarySearchTree.getMinimumDepth).to.be.a("function");
+    expect(binarySearchTree.getMaximumDepth).to.be.a("function");
+    expect(binarySearchTree.shouldRebalanceTree).to.be.a("function");
+    expect(binarySearchTree.rebalanceTree).to.be.a("function");
+  });
+
+  it('getMinimumDepth should return the minimum depth', function () {
+    //build a tree with known minimum depth
+    binarySearchTree.insert(2);
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(7); //minimum depth should be 2
+    expect(binarySearchTree.getMinimumDepth()).to.equal(2);
+  });
+  it('getMaximumDepth should return the maximum depth', function () {
+    //build a tree with known maximum depth
+    binarySearchTree.insert(2);
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(7); //maximum depth should be 3
+    expect(binarySearchTree.getMaximumDepth()).to.equal(3);
+  });
+  it('shouldRebalanceTree should return true when maximum depth is more than twice the minimum depth', function () {
+    // build a tree with known maximum and minimum depth
+    // maximum depth: 6
+    // minimum depth: 2
+    var BST = new BinarySearchTree(8);
+    BST.insert(7);
+    BST.insert(9);
+    BST.insert(5);
+    BST.insert(2);
+    BST.insert(6);
+    BST.insert(1);
+    BST.insert(3);
+    BST.insert(0);
+    expect(BST.shouldRebalanceTree()).to.equal(true);
+  });
+  it('shouldRebalanceTree should return false when maximum depth is less than twice the minimum depth', function () {
+    // build a tree with known maximum and minimum depth
+    // maximum depth = minimum depth = 2
+    var BST = new BinarySearchTree(8);
+    BST.insert(7);
+    BST.insert(9);
+    expect(BST.shouldRebalanceTree()).to.equal(false);
+  });
+  it('rebalanceTree should rebalance the tree', function () {
+    // build a tree with known maximum and minimum depth
+    // maximum depth: 6
+    // minimum depth: 2
+    var BST = new BinarySearchTree(8);
+    BST.insert(7);
+    BST.insert(9);
+    BST.insert(5);
+    BST.insert(2);
+    BST.insert(6);
+    BST.insert(1);
+    BST.insert(3);
+    BST.insert(0);
+    expect(JSON.stringify(BST.rebalanceTree().breadthFirstLog())).to.equal(JSON.stringify([5,2,7,1,3,6,8,0,5,9]));
+  });
 });
